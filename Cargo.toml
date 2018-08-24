@@ -1,0 +1,8 @@
+[package]
+authors = ["Yuri Iozzelli <y.iozzelli@gmail.com>"]
+name = "totp"
+version = "0.1.0"
+
+[dependencies]
+byteorder = "1.2.1"
+hmac-sha1 = "0.1.3"
