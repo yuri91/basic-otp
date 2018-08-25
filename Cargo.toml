@@ -1,7 +1,9 @@
 [package]
 authors = ["Yuri Iozzelli <y.iozzelli@gmail.com>"]
-name = "totp"
+name = "basic-otp"
 version = "0.1.0"
+description = "Basic HOTP and TOTP implementation"
+license = "MIT"
 
 [dependencies]
 byteorder = "1.2.1"
