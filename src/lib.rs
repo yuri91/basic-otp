@@ -23,6 +23,25 @@ pub fn hotp(key: &[u8], counter: u64, digits: u32) -> u32 {
 
 const DIGITS: u32 = 6;
 const TIME_STEP: u64 = 30;
+
+#[derive(Debug)]
+pub struct TotpSlot {
+    pub code: u32,
+    pub secs_left: u32,
+}
+
+pub fn totp_offset(key: &[u8], slot_offset: i32) -> TotpSlot {
+    let now = time::SystemTime::now().duration_since(time::UNIX_EPOCH).expect("Current time is before unix epoch");
+    let slot = (now.as_secs()/TIME_STEP) as i64 + slot_offset as i64;
+
+    let code = hotp(key, slot as u64, DIGITS);
+    let secs_left = (((slot_offset+1) as u64)*TIME_STEP - now.as_secs()%TIME_STEP) as u32;
+    TotpSlot {
+        code,
+        secs_left,
+    }
+}
+
 pub fn totp(key: &[u8]) -> u32 {
     let now = time::SystemTime::now().duration_since(time::UNIX_EPOCH).expect("Current time is before unix epoch");
     let slot = now.as_secs()/TIME_STEP;
